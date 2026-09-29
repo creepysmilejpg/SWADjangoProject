@@ -51,6 +51,56 @@ This is the one interaction where DefectDojo holds another system's credentials 
 
 ## 2. For each use case, derive security requirements using misuse case analysis.
 
+**1. Injection of Malicious Information**
+
+![DefectDojo attacker injects malicious info](./diagrams/Malicious_Injection.png)
+
+A pipeline attacker could be someone who obtained a DefectDojo API key belonging to a CI/CD pipeline. The API key allows the pipeline to authenticate to DefectDojo. The attacker in questions can then make requests that appear legtimate. This could include modifying the information being imported, creating unauthorized application structures, or submitting fabricated information.
+
+**Security requirement:** Validate/Authorize API Imports
+DefectDojo should validate imported scan results and ensure that the API requests being made are authorized according to the permissions of the account that are associated with that API key. API activity should also be logged so administrators can identify which account made the request.
+
+---
+
+**2. Falsely Accepting Vulnerabilities**
+
+![DefectDojo analyst misuses access](./diagrams/Falsely_Accept_Vulnerability.png)
+
+A malicious security analyst would be someone who is a authenticated user and has legitimate access to vulnerability findings, but intentionally misues that access to mislead others on the current risks. This scenario works as an insider threat, where the analyst compromises the integrity of vulnerability information. They can prevent the proper remediation from taking place, leading to real security issues being left unchecked.
+
+**Security requirement:** Audit Finding Changes
+DefectDojo should restrict security sensitive finding changes to authorized users and maintain an audit of changes to finding status and risk acceptance. The system should record who made the change and when. Risk acceptances should retain their expiration information so that accepted vulnerabilities can be re-evaluated when the acceptance expires.
+
+---
+**3. Access Another Application's Findings**
+
+![DefectDojo app dev misuses accesses](./diagrams/Asset_Authorization.png)
+
+A malicious application developer is a legitimate developer who has access to one application in DefectDojo but attempts to access information belonging to another. If this is successful, this can expose vulnerability information belonging to another application and potentially allow them to modify or remediate findings they are not responsible for.
+
+**Security requirement:** Asset Level Authorization
+DefectDojo should verify a user is authorized to access an asset before providing access to its resources. These checks can apply to both the user interface and API requests so that a user can't bypass the application's authorization boundary.
+
+---
+**4. Grant Unauthorized Access**
+
+![DefectDojo admin misuses authorization](./diagrams/Unauthorized_Access.png)
+
+A compromised administrator is an attacker who has obtained control of a superuser account. These accounts have greater access than normal users, and can manage authorized users, access rights, etc. The attacker can add themselves or another account to an asset, create unauthorized privileged access, or even modify existing access controls to view application data.
+
+**Security requirement:** Restrict and Audit Privilege Changes
+DefectDojo should restrict user and access management functions to authorized administrators and maintain an audit trail of changes to user permissions and authorized user lists. Administrator privilege assignments should require appropriate authorization and they should be able to disable API token functionality when not required to reduce attack surface.
+
+---
+**5. Use Stolen Jira Credentials**
+
+![DefectDojo credential thief](./diagrams/Credential_Theft.png)
+
+A credential thief is an attacker who obtains credentials used by DefectDojo to communicate with Jira. DefectDojo stores these credentials and communicates with Jira asynchronously through the integration. The attacker can potentially use these credentials outside of DefectDojo to access or manipulate information in Jira.
+
+**Security requirement:** Protect and Authenticate Integration Credentials
+DefectDojo should protect Jira integration credentials from unauthorized access and restrict changes to the integration configuration to authorized administrators. Jira webhook requests should be authenticated before they are processed and integration activity should be logged so unauthorized requests or changes can be identified.
+
 ---
 
 ## 3. Iterate between use and misuse cases.
