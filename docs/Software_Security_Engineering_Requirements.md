@@ -16,7 +16,12 @@ Task assignments, discussion, and progress tracking for this project are managed
 ---
 
 # Part 1
-## 1. Identify five essential interactions of your open-source software (system-of-interest) with its environment of operation
+## 1. The Five Essential Interactions of Defectdojo.
+![CI/CD pipline imports scan results through the API](./diagrams/CICD_usecase.png)
+![Security analyst triages findings and records risk acceptance](./diagrams/Analyst_Triage_usecase.png)
+![Developer or product owner views and remediates findings for their own asset](./diagrams/Developer_remediation_usecase.png)
+![DefectDojo administrator manages users and access](./diagrams/Admin_acess_usecase.png)
+![DefectDojo pushes findings to Jira](./diagrams/Jira_usecase.png)
 
 ---
 
