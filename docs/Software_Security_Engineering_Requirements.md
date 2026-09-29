@@ -22,22 +22,22 @@ Task assignments, discussion, and progress tracking for this project are managed
 ![CI/CD pipline imports scan results through the API](./diagrams/CICD_usecase.png)
 
 This is how nearly all data enters DefectDojo. Reports can be uploaded either directly through the UI or through an API endpoint that allows automated ingestion. API calls authenticate with a header containing the user's API key. In the open-source edition, auto-creating the Organization/Asset/Engagement/Test context during import is only available through the API; UI imports need the hierarchy to exist first. That means a pipeline token can create structure, not just findings, which is a useful point for the misuse cases.
-
+---
 **2. Security analyst triages findings and records risk acceptance**
 ![Security analyst triages findings and records risk acceptance](./diagrams/Analyst_Triage_usecase.png)
 
 This is the core decision workflow, and it is exactly what your "integrity compromise" threat targets. Besides active states, a finding can be marked Duplicate, Mitigated, False Positive, Out Of Scope, Risk Accepted, or Under Defect Review. Risk Acceptances can carry uploaded files and notes as justification, and they have expiry dates that force re-evaluation. Each Asset can have its own SLA configuration, which sets the number of days allowed to remediate a finding.
-
+---
 **3. Developer or product owner views and remediates findings for their own asset**
 ![Developer or product owner views and remediates findings for their own asset](./diagrams/Developer_remediation_usecase.png)
 
 This interaction carries your "cross-application disclosure" threat (App A's developer seeing App B), and that threat maps to DefectDojo's authorization boundary. An Asset's Authorized Users list grants access to that Asset and everything nested beneath it, while an Organization's list cascades to every Asset underneath. Open source now offers only local username/password login plus the password-reset flow.
-
+---
 **4. DefectDojo administrator manages users and access**
 ![DefectDojo administrator manages users and access](./diagrams/Admin_acess_usecase.png)
 
 This maps to your "privilege escalation" threat. Superuser and staff accounts can see and act on every Asset and Organization regardless of the Authorized Users lists, and only those accounts get the controls to change the lists. The first account on a fresh install is automatically a superuser. Admins can also harden the API surface: API tokens can be turned off entirely with DD_API_TOKENS_ENABLED=False, or only the api-token-auth endpoint can be disabled with DD_API_TOKEN_AUTH_ENDPOINT_ENABLED=False.
-
+---
 **5. DefectDojo pushes findings to Jira**
 ![DefectDojo pushes findings to Jira](./diagrams/Jira_usecase.png)
 
