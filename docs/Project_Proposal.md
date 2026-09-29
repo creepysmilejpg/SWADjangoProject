@@ -34,7 +34,7 @@ The organization's cybersecurity department is responsible for identifying and c
 
 The diagram below identifies DefectDojo as the system of interest, the enabling systems it depends on to operate, the interoperating systems it exchanges data with, and the stakeholders acting on it — all within the organization's enterprise operational environment.
 
-![Systems Engineering View of DefectDojo](systems_engineering_diagram.png)
+![Systems Engineering View of DefectDojo](diagrams/systems_engineering_diagram.png)
 
 ### Perceived Threats
 
