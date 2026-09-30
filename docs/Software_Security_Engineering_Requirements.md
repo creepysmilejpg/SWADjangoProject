@@ -105,6 +105,9 @@ DefectDojo should protect Jira integration credentials from unauthorized access 
 
 ## 3. Iterate between use and misuse cases.
 
+<img width="724" height="691" alt="image" src="https://github.com/user-attachments/assets/ab725d8c-8aa7-4503-a699-4673f13c0f9b" />
+
+
 ---
 
 ## 4. Build a list of security requirements derived from misuse case analysis.
