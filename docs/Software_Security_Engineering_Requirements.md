@@ -122,6 +122,71 @@ The following is a prompt we utilized to both assist in both the creation and re
 
 ## 4. Build a list of security requirements derived from misuse case analysis.
 
+The misuse case analysis in Sections 2 and 3 produced five top-level security requirements, one for each essential interaction. Below, each one is broken into specific, testable "shall" statements that describe functions the software itself must provide. The numbering (SR-1 to SR-5) matches Requirements 1–5 assessed in Section 5.
+
+### Traceability summary
+
+| ID | Security Requirement | Derived From (Misuse Case) | Misuser | Threat Addressed (Proposal) | Use Case Protected |
+|---|---|---|---|---|---|
+| SR-1 | Validate and Authorize API Imports | Injection of Malicious Information | Pipeline Attacker | Integrity compromise, Denial of service | CI/CD pipeline imports scan results through the API |
+| SR-2 | Audit Finding Changes | Falsely Accepting Vulnerabilities | Malicious Security Analyst | Integrity compromise | Security analyst triages findings and records risk acceptance |
+| SR-3 | Asset-Level Authorization | Access Another Application's Findings | Malicious Application Developer | Unauthorized access / cross-application disclosure | Developer views and remediates findings for their own asset |
+| SR-4 | Restrict and Audit Privilege Changes | Grant Unauthorized Access | Compromised Administrator | Privilege escalation | Administrator manages users and access |
+| SR-5 | Protect and Authenticate Integration Credentials | Use Stolen Jira Credentials | Credential Thief | Credential theft | DefectDojo pushes findings to Jira |
+
+### Detailed requirements
+
+**SR-1: Validate and Authorize API Imports**
+*Misuse case:* A Pipeline Attacker uses a stolen CI/CD API key to import fabricated or modified scan data, or to create unauthorized application structures.
+
+| ID | Requirement |
+|---|---|
+| SR-1.1 | The system shall authenticate every API request using a token bound to a single user account. |
+| SR-1.2 | The system shall authorize each import against that account's permissions on the target Engagement or Asset before accepting data. |
+| SR-1.3 | The system shall apply the same authorization check to any Organization, Asset, Engagement, or Test that an import request would create automatically (`auto_create_context`). |
+| SR-1.4 | The system shall validate uploaded scan files before parsing them, rejecting files that exceed size limits, are malformed, or are compressed archives that exceed safe decompression limits. |
+| SR-1.5 | The system shall log API import activity with the acting account, so that administrators can identify which account submitted each import. |
+
+**SR-2: Audit Finding Changes**
+*Misuse case:* A Malicious Security Analyst uses legitimate access to falsely mark findings as accepted, false positive, or mitigated, hiding real vulnerabilities from remediation.
+
+| ID | Requirement |
+|---|---|
+| SR-2.1 | The system shall restrict changes to finding status, severity, and risk acceptance to users authorized for the affected Asset. |
+| SR-2.2 | The system shall record an audit entry for every change to a finding's status or severity and to every risk acceptance, including the acting user, the time of the change, and the old and new values. |
+| SR-2.3 | The system shall require every risk acceptance to have an expiration date. |
+| SR-2.4 | The system shall re-evaluate accepted findings when their risk acceptance expires, returning them to an active state so they are reviewed again. |
+
+**SR-3: Asset-Level Authorization**
+*Misuse case:* A Malicious Application Developer who is authorized for one application tries to view or modify findings belonging to another application.
+
+| ID | Requirement |
+|---|---|
+| SR-3.1 | The system shall verify that a user is authorized for an Asset before displaying or modifying any of its engagements, tests, or findings. |
+| SR-3.2 | The system shall enforce the same authorization checks in both the user interface and the REST API, so the boundary cannot be bypassed through either one. |
+| SR-3.3 | The system shall filter list, search, report, and metrics results so they include only Assets the user is authorized to access. |
+| SR-3.4 | The system shall deny access by default when no authorization for the requested object can be established. |
+
+**SR-4: Restrict and Audit Privilege Changes**
+*Misuse case:* A Compromised Administrator uses a stolen superuser account to add themselves or others to Assets, create privileged accounts, or change existing access controls.
+
+| ID | Requirement |
+|---|---|
+| SR-4.1 | The system shall restrict user creation, privilege assignment (staff/superuser), and changes to Asset and Organization authorized-user lists to authorized administrators. |
+| SR-4.2 | The system shall record an audit entry for every change to user privileges and every addition to or removal from an authorized-user list, including the acting administrator, the affected user, and the time. |
+| SR-4.3 | The system shall allow administrators to disable API token authentication, or only the token-issuing endpoint, when it is not required. |
+
+**SR-5: Protect and Authenticate Integration Credentials**
+*Misuse case:* A Credential Thief obtains the credentials DefectDojo uses to connect to Jira and uses them outside DefectDojo to access or manipulate Jira data.
+
+| ID | Requirement |
+|---|---|
+| SR-5.1 | The system shall never return stored Jira credentials in the user interface or API responses once they have been saved. |
+| SR-5.2 | The system shall encrypt stored Jira credentials at rest. |
+| SR-5.3 | The system shall restrict creation and modification of the Jira integration configuration to authorized administrators. |
+| SR-5.4 | The system shall authenticate inbound Jira webhook requests before processing them, and shall ignore webhook requests when the integration is disabled. |
+| SR-5.5 | The system shall log changes to the integration configuration and integration activity, so that unauthorized requests or changes can be identified. |
+
 ---
 
 ## 5. Assess the alignment of security requirements
