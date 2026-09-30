@@ -107,11 +107,14 @@ DefectDojo should protect Jira integration credentials from unauthorized access 
 
 <img width="724" height="691" alt="image" src="https://github.com/user-attachments/assets/ab725d8c-8aa7-4503-a699-4673f13c0f9b" />
 
+<img width="1375" height="417" alt="image" src="https://github.com/user-attachments/assets/3dc2b786-8ca7-4c94-b1e3-7278786609c6" />
+<img width="1379" height="396" alt="image" src="https://github.com/user-attachments/assets/975bed62-003c-4281-ae2a-e6bae133eb1b" />
+<img width="1378" height="187" alt="image" src="https://github.com/user-attachments/assets/5b40b52e-e486-462b-a63d-4cf7ed868357" />
 
-<img width="724" height="691" alt="image" src="https://github.com/user-attachments/assets/cac47953-be6c-4434-bb2d-e17931145d0d" />
 
 
 The following is a prompt we utilized to both assist in both the creation and reviewal of our diagram: 
+<img width="1347" height="116" alt="image" src="https://github.com/user-attachments/assets/416247b3-27b4-4360-a97e-efe348a78295" />
 
 
 
