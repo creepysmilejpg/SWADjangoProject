@@ -215,3 +215,98 @@ Taken together, DefectDojo's OS edition provides a **reasonable floor but not th
 ---
 # Part 2
 ## 1. Review your OSS project documentation specifically for security-related configuration and installation issues. Summarize your observations about what could be improved or is missing.
+
+### Scope and method
+
+We reviewed the documentation an open-source (OS) user would follow to install, configure, and harden DefectDojo. For each security-relevant statement, we checked the shipped files and code to see whether the docs match the actual behavior. We reviewed the `master` branch of [django-DefectDojo](https://github.com/DefectDojo/django-DefectDojo) at commit `8b12d80` (28 Sep 2026).
+
+| Documentation reviewed | Checked against |
+|---|---|
+| `README.md` (Quick Start, Documentation links) | `docker-compose.yml` |
+| `readme-docs/DOCKER.md` | `docker-compose.override.https.yml`, `docker-compose.override.dev.yml` |
+| `readme-docs/KUBERNETES.md` | `helm/defectdojo/values.yaml` |
+| `readme-docs/SECURITY.md` | `nginx/nginx.conf`, `nginx/nginx_TLS.conf` |
+| `docs/content/get_started/open_source/installation.md` | `dojo/settings/settings.dist.py` |
+| `docs/content/get_started/open_source/configuration.md` | `dojo/management/commands/complete_initialization.py` |
+| `docs/content/get_started/open_source/running-in-production.md` | |
+| `docs/content/automation/api/api-v2-docs.md` and `rate_limiting.md` | |
+| `docs/content/connectors/os_jira/os__jira_guide.md` | |
+
+### What the documentation does well
+
+- **Honest about the quick-start file.** It says clearly that `docker-compose.yml` is for evaluation and "not intended for production use without first customizing it."
+- **Explains the credential encryption key.** *Running in Production* tells users to replace the default `DD_CREDENTIAL_AES_256_KEY`, gives an `openssl rand -base64 32` example, and admits the key "does not cover every credential DefectDojo stores."
+- **Random first admin password.** The initializer generates a random 22-character admin password instead of shipping a fixed one.
+- **Warns against the debug toolbar.** `DOCKER.md` warns not to enable the Django Debug Toolbar in production.
+- **Good Jira webhook guidance.** The OS Jira guide requires a webhook secret whenever the integration is enabled and tells users to "treat the generated value as a credential."
+- **Documents API token controls.** The API docs explain how to disable API tokens (`DD_API_TOKENS_ENABLED`, `DD_API_TOKEN_AUTH_ENDPOINT_ENABLED`) and how to set token expiry.
+- **Clear reporting process.** `SECURITY.md` gives a private reporting channel (HackerOne), a GitHub security-advisory workflow, and a safe-harbor statement.
+
+### Observations: what is missing or could be improved
+
+#### A. Secrets and default credentials
+
+| # | Observation | Where | Why it matters | Suggested improvement |
+|---|---|---|---|---|
+| A1 | `docker-compose.yml` has a hard-coded fallback for `DD_SECRET_KEY` (`hhZCp@D28z!n@NED*yB!ROMt+WzsY*iq`), but *Running in Production* only tells users to change the AES key. `DD_SECRET_KEY` isn't mentioned anywhere in the OS docs, only on Pro pages. | `running-in-production.md`, `docker-compose.yml` | Django uses this key to sign sessions and password-reset tokens. Every deployment that keeps the public default shares a known signing key. | Add `DD_SECRET_KEY` next to the AES key in the Security section, with a generation command and a warning that the default is public. |
+| A2 | The bundled PostgreSQL uses `defectdojo` / `defectdojo` as its default user and password. No page tells users to change them. | `docker-compose.yml` | This database holds every finding and the Jira credentials. Anyone who can reach it with the default login can read everything. | Document `DD_DATABASE_PASSWORD` / `DD_DATABASE_URL` in the production guide and recommend a unique password or an external database. |
+| A3 | The README and `DOCKER.md` tell users to get the first admin password with `docker compose logs initializer \| grep "Admin password:"`. Nothing says to rotate it afterward, clear the logs, or set `DD_ADMIN_PASSWORD` in advance. `DOCKER.md`'s own password-change example uses `Password123!`. | `README.md`, `DOCKER.md` | The superuser password stays in container logs, which often end up in log aggregators. The example teaches a weak password. | Recommend setting `DD_ADMIN_PASSWORD` from a secret store, or changing the password on first login and clearing the logs. Replace the example with a placeholder such as `<strong-unique-password>`. |
+| A4 | *Configuration* says environment variables must be set for "three services: `uwsgi`, `celerybeat` and `celeryworker`." The `initializer` service also reads `DD_SECRET_KEY` and `DD_CREDENTIAL_AES_256_KEY`. | `configuration.md` | If a user changes the keys in three services but not the initializer, the stack runs with inconsistent secrets. That is hard to debug, and it tempts users back to the defaults. | List all four services, or recommend a single `.env` file / `x-` anchor so secrets are defined once. |
+| A5 | The production guide says the AES key "does not cover every credential," but doesn't say which ones it misses. In code, the Jira integration password (`JIRA_Instance.password`) is stored as plain text. | `running-in-production.md` | Admins can't judge how sensitive their database and backups are without knowing this. | State which credentials are not encrypted, recommend a least-privilege Jira API token instead of a password, and recommend encrypting the database and backups at rest. |
+
+#### B. Transport security and HTTP hardening
+
+| # | Observation | Where | Why it matters | Suggested improvement |
+|---|---|---|---|---|
+| B1 | The HTTPS override (`docker-compose.override.https.yml`) generates a self-signed certificate by default and still publishes plain-HTTP port 8080. It sets secure cookies, but not `DD_SECURE_SSL_REDIRECT` or HSTS. The "use your own credentials" steps in `DOCKER.md` are unclear: they say to "copy your secrets into `../nginx/nginx_TLS.conf`" when they mean certificate paths. | `DOCKER.md`, `docker-compose.override.https.yml` | Users who follow the HTTPS instructions still expose an HTTP login page, and nothing redirects them to HTTPS. | Provide a production TLS example that disables the HTTP port or redirects it, sets `DD_SECURE_SSL_REDIRECT=True` and HSTS, and uses a CA-issued certificate. Rewrite the certificate steps as a numbered procedure. |
+| B2 | None of the session and cookie hardening settings are documented anywhere: `DD_SESSION_COOKIE_SECURE`, `DD_CSRF_COOKIE_SECURE`, `DD_SECURE_SSL_REDIRECT`, `DD_SECURE_HSTS_SECONDS` / `_INCLUDE_SUBDOMAINS`, `DD_SESSION_COOKIE_AGE` (default 14 days), and `DD_SESSION_EXPIRE_AT_BROWSER_CLOSE`. In `settings.dist.py`, HSTS is only applied when `DD_SECURE_HSTS_INCLUDE_SUBDOMAINS=True`, which a reader would not expect. | All OS docs | Users can only find these by reading the source. The defaults are all insecure: cookies aren't HTTPS-only, there's no redirect, and sessions last 14 days. | Add a "Session and transport security" table to *Running in Production* with each variable, its default, and the recommended production value, and explain the HSTS quirk. |
+| B3 | `docker-compose.yml` sets `DD_ALLOWED_HOSTS` to `*`, while `settings.dist.py` defaults to `localhost`. The OS docs never mention the variable; only Pro install pages do. | `docker-compose.yml`, OS docs | A wildcard host list allows Host-header attacks such as poisoned password-reset links. | Document `DD_ALLOWED_HOSTS` as a required production setting and change the compose default to a placeholder. |
+| B4 | The Security section says only "verify the `nginx` configuration and other run-time aspects such as security headers." The shipped `nginx.conf` / `nginx_TLS.conf` add no security headers. They do set `server_tokens off`, and the TLS config limits protocols to TLS 1.2/1.3. | `running-in-production.md`, `nginx/` | Users are told to check headers but not which ones, or which ones Django already sets. | List recommended headers (HSTS, Content-Security-Policy, Referrer-Policy, Permissions-Policy), say which ones Django already provides, and give a sample `add_header` block. |
+| B5 | The API code samples use `http://` URLs and include the comment "set verify to False if ssl cert is self-signed." | `api-v2-docs.md` | This treats turning off TLS certificate checks as normal for the credential users copy most: API tokens. | Use `https://` in the examples and recommend pointing `verify=` at a CA bundle instead of disabling verification. |
+
+#### C. Authentication, authorization, and auditing
+
+| # | Observation | Where | Why it matters | Suggested improvement |
+|---|---|---|---|---|
+| C1 | *Rate Limiting* lists the defaults as `DD_RATE_LIMITER_ENABLED=(bool, True)`, `..._BLOCK=(bool, True)`, and `..._ACCOUNT_LOCKOUT=(bool, True)`. In `settings.dist.py` all three default to **`False`**. The page also contradicts itself: "By default, rate limiting records offenses but does not block requests." The error is copied into all 7 translated versions. | `rate_limiting.md` (+ translations) | Readers will believe brute-force protection is on when it is not. | Fix the defaults, add a "to enable" example, and propagate the fix to the translations. |
+| C2 | The same page says rate-limit counters are "not shared across processes" when uWSGI runs several workers, which is the default (4 processes). It doesn't say how to fix it. | `rate_limiting.md` | Even when enabled, an attacker gets roughly four times the configured rate. | Show how to point Django's cache at the bundled Valkey so counters are shared. |
+| C3 | The API docs show `DD_API_TOKEN_DEFAULT_EXPIRY_DAYS=90` as an example but don't say the default is `0`, meaning tokens never expire. | `api-v2-docs.md` | CI/CD tokens are long-lived and easy to leak. Users may assume they expire. | State the default and recommend an expiry for production. |
+| C4 | The README still links to OAuth2/SAML2 (under `archived_docs`) and LDAP pages. The 3.0 upgrade notes say SSO and remote-user authentication are Pro-only and OS supports only local username/password login. MFA is also Pro-only, and the OS install docs don't say so. | `README.md` | Teams may plan their authentication around SSO or MFA that the OS edition no longer provides. | Remove or relabel the links as "Pro only," and add an OS authentication page listing what is and isn't available. |
+| C5 | OS and Pro permission docs sit side by side. Pages describing Reader/Writer/Maintainer/Owner roles are only marked Pro by a filename prefix or a toggle. The OS model is the *Authorized Users* list plus staff/superuser. | `admin/user_management/` | Readers may think role separation, such as a read-only developer, exists in OS when it does not. | Put a clear edition banner at the top of every Pro-only page, and link OS readers to the Authorized Users page. |
+| C6 | `DD_ENABLE_AUDITLOG` is documented only on a Pro audit-log page and in the 2.30 upgrade notes. The retention settings (`DD_AUDITLOG_FLUSH_RETENTION_PERIOD`, etc.) aren't documented. Nothing says which objects are audited. For example, changes to Authorized Users lists and to the Jira configuration are not recorded. | OS audit docs | Admins can't tell whether the audit trail will answer "who gave this person access?" | Document the settings, list the audited models, and state known gaps. |
+
+#### D. Deployment options, policy, and structure
+
+| # | Observation | Where | Why it matters | Suggested improvement |
+|---|---|---|---|---|
+| D1 | *Installation* lists Kubernetes under "Options for the brave (not officially supported)." `KUBERNETES.md` is a single line pointing to the Helm README. The Helm `values.yaml` ships with empty `secretKey`, `credentialAes256Key` and admin password, and `createSecret: false`. *Architecture* notes that the chart still uses Redis rather than Valkey. | `installation.md`, `KUBERNETES.md`, `helm/` | Enterprise users are the most likely to use Kubernetes, and they get no guidance on managing secrets or network policy. | Add an OS Helm hardening note covering where secrets come from (external secret store), network policies, and the support status. Otherwise, state plainly that Helm is unsupported for production. |
+| D2 | `SECURITY.md` describes how to report issues, but doesn't say which versions receive security fixes, how users are notified of security releases, or which edition (OS or Pro) the policy covers. It also has a typo ("coordonate"). | `readme-docs/SECURITY.md` | Operators can't tell whether they need to upgrade to get a fix, or how they'd find out. | Add a "Supported Versions" table (e.g. latest minor release only), link to the GitHub Security Advisories page and release notes, and state the edition scope. |
+| D3 | There's no single security checklist for production. The settings above are spread across 6+ pages, or found only in source code. Upload-hardening limits (`DD_MAX_ZIP_MEMBER_SIZE`, `DD_MAX_ZIP_TOTAL_SIZE`, `DD_MAX_ZIP_RATIO`) appear only in `settings.dist.py`. `DD_SCAN_FILE_MAX_SIZE` is documented only on a Pro page. | Docs as a whole | Operators can't check whether an instance is hardened without reading the code. | Create an OS "Security Hardening Checklist" page (outline below). |
+| D4 | Every page exists in 8 languages. Security corrections, such as C1, have to be copied into each translation, and nothing flags a translation as out of date. | `docs/content/**` | Non-English readers may get stale or wrong security guidance. | Mark translations with the English revision they're based on, or show an "English version is authoritative" note on security pages. |
+
+### Proposed contribution: OS Security Hardening Checklist
+
+The highest-value fix is one page, linked from *Installation* and *Running in Production*, that brings the scattered settings together:
+
+1. **Secrets:** replace `DD_SECRET_KEY`, `DD_CREDENTIAL_AES_256_KEY`, and `DD_DATABASE_PASSWORD`, and set `DD_ADMIN_PASSWORD` before first boot. Define them once, for all four services.
+2. **Network and TLS:** serve over HTTPS with a CA-issued certificate, close or redirect port 8080, and set `DD_ALLOWED_HOSTS`, `DD_SECURE_SSL_REDIRECT`, and HSTS.
+3. **Sessions:** set `DD_SESSION_COOKIE_SECURE` and `DD_CSRF_COOKIE_SECURE`, and shorten `DD_SESSION_COOKIE_AGE`.
+4. **Login protection:** enable `DD_RATE_LIMITER_ENABLED`, `_BLOCK`, and `_ACCOUNT_LOCKOUT`, backed by a shared cache.
+5. **API:** set `DD_API_TOKEN_DEFAULT_EXPIRY_DAYS`, and disable tokens (`DD_API_TOKENS_ENABLED=False`) if they aren't used.
+6. **Integrations:** use a least-privilege Jira API token, keep the webhook secret enabled, and remember that the Jira credential is not encrypted at rest.
+7. **Data:** encrypt the database and media volume at rest, back them up, and protect the backups like the database itself.
+8. **Auditing:** keep `DD_ENABLE_AUDITLOG=True`, set a retention period, and forward logs to a SIEM.
+9. **Edition awareness:** SSO, MFA, and role-based permissions are Pro-only, so plan compensating controls (e.g. an identity-aware reverse proxy) if they're required.
+
+Per `CONTRIBUTING.md`, this would be submitted as a pull request against the `dev` branch. Documentation-only changes don't need the `enhancement-approved` pre-approval that code enhancements need. Items A1–A5, B5, C1, C3, and D2 are small, self-contained edits that could each be a separate first-time PR.
+
+### Summary
+
+DefectDojo's documentation is honest that the default Docker Compose setup is for evaluation only, but it doesn't tell users how to get from evaluation to a hardened deployment. Our most significant findings:
+
+- **Undocumented defaults.** The public default `DD_SECRET_KEY` and database password aren't mentioned anywhere in the OS docs.
+- **Incorrect rate-limiting defaults.** The docs claim protection is on when it is off.
+- **Missing transport settings.** None of the session, cookie, and HSTS settings are documented.
+- **Stale edition information.** Links to SSO features that were removed from the OS edition are still live.
+
+Nearly every security control DefectDojo implements is off by default, or can only be found by reading `settings.dist.py`. A single hardening checklist plus the corrections above would close most of the gap between what the software can do and what an operator following the docs actually gets.
