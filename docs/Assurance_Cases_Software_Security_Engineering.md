@@ -66,3 +66,35 @@ Task assignments, discussion, and progress tracking for this project are managed
 ![Claim 1, R1.4 and R1.5 branches](./diagrams/Claim1_R1.4_R1.5.png)
 
 </details>
+
+### Claim 2: DefectDojo ensures that vulnerability finding changes and risk acceptances are appropriately authorized, auditable, and subject to an expiration review
+
+![Claim 2 overview](./diagrams/Claim2_Overview.png)
+
+<details>
+<summary><b>R2.1: Unless any user on the Asset can change finding status</b></summary>
+
+![Claim 2, R2.1 branch](./diagrams/Claim2_R2.1.png)
+
+</details>
+
+<details>
+<summary><b>R2.2: Unless audit logging is disabled</b></summary>
+
+![Claim 2, R2.2 branch](./diagrams/Claim2_R2.2.png)
+
+</details>
+
+<details>
+<summary><b>R2.3 and R2.4: Unless a risk acceptance has no meaningful expiry / the expiration job does not run</b></summary>
+
+![Claim 2, R2.3 and R2.4 branches](./diagrams/Claim2_R2.3_R2.4.png)
+
+</details>
+
+<details>
+<summary><b>R2.5: Unless findings are deleted without a trace</b></summary>
+
+![Claim 2, R2.5 branch](./diagrams/Claim2_R2.5.png)
+
+</details>
