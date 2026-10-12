@@ -35,3 +35,34 @@ Task assignments, discussion, and progress tracking for this project are managed
 # Part 2
 ## 1. Assess the alignment of the evidence
 
+### Claim 1: DefectDojo preserves the integrity of vulnerability scan results that are imported through CI/CD pipelines
+
+![Claim 1 overview](./diagrams/Claim1_Overview.png)
+
+<details>
+<summary><b>R1.1: Unless the pipeline API token is stolen</b></summary>
+
+![Claim 1, R1.1 branch](./diagrams/Claim1_R1.1.png)
+
+</details>
+
+<details>
+<summary><b>R1.2: Unless a token can import into unauthorized Assets</b></summary>
+
+![Claim 1, R1.2 branch](./diagrams/Claim1_R1.2.png)
+
+</details>
+
+<details>
+<summary><b>R1.3: Unless the scan file is malformed or malicious</b></summary>
+
+![Claim 1, R1.3 branch](./diagrams/Claim1_R1.3.png)
+
+</details>
+
+<details>
+<summary><b>R1.4 and R1.5: Unless a reimport closes valid findings / imports cannot be traced</b></summary>
+
+![Claim 1, R1.4 and R1.5 branches](./diagrams/Claim1_R1.4_R1.5.png)
+
+</details>
