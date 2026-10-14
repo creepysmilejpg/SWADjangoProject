@@ -96,6 +96,9 @@ Task assignments, discussion, and progress tracking for this project are managed
 
 ### Claim 3: DefectDojo prevents users from accessing or modifying vulnerability information belonging to applications they are not authorized to
 
+<img width="897" height="660" alt="image" src="https://github.com/user-attachments/assets/f4b0428a-e258-43f2-9f04-835721425a31" />
+
+
 R3.1: Unless an endpoint skips the authorization check
 
 R3.2: Unless lists, reports, or metrics leak other assets
@@ -107,6 +110,9 @@ R3.4: Unless an authorized user's account is hijacked
 R3.5: Unless Organization-level access cascades too broadly
 
 ### Claim 4: DefectDojo restricts administrative privilege changes to authorized administrators and provides an auditable record of access control changes
+
+<img width="905" height="658" alt="image" src="https://github.com/user-attachments/assets/21f25fda-1e3f-4fbd-82ef-cead394a4351" />
+
 
 R4.1: Unless the admin account is compromised
 
