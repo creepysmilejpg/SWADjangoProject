@@ -96,41 +96,40 @@ Task assignments, discussion, and progress tracking for this project are managed
 
 ### Claim 3: DefectDojo prevents users from accessing or modifying vulnerability information belonging to applications they are not authorized to
 
-<img width="897" height="660" alt="image" src="https://github.com/user-attachments/assets/f4b0428a-e258-43f2-9f04-835721425a31" />
-
+![Claim 3 overview](./diagrams/Claim3_Overview.png)
 
 <details>
 <summary><b>R3.1: Unless an endpoint skips the authorization check</b></summary>
 
-![Claim 3 - R3.1 Endpoint Authorization](./diagrams/Claim3_R3.1.png)
+![Claim 3, R3.1 branch](./diagrams/Claim3_R3.1.png)
 
 </details>
 
 <details>
 <summary><b>R3.2: Unless lists, reports, or metrics leak other assets</b></summary>
 
-![Claim 3 - R3.2 Reports and Metrics](./diagrams/Claim3_R3.2.png)
+![Claim 3, R3.2 branch](./diagrams/Claim3_R3.2.png)
 
 </details>
 
 <details>
 <summary><b>R3.3: Unless staff status bypasses the access lists</b></summary>
 
-![Claim 3 - R3.3 Staff Status](./diagrams/Claim3_R3.3.png)
+![Claim 3, R3.3 branch](./diagrams/Claim3_R3.3.png)
 
 </details>
 
 <details>
 <summary><b>R3.4: Unless an authorized user's account is hijacked</b></summary>
 
-![Claim 3 - R3.4 Account Hijacking](./diagrams/Claim3_R3.4.png)
+![Claim 3, R3.4 branch](./diagrams/Claim3_R3.4.png)
 
 </details>
 
 <details>
 <summary><b>R3.5: Unless Organization-level access cascades too broadly</b></summary>
 
-![Claim 3 - R3.5 Organization Access](./diagrams/Claim3_R3.5.png)
+![Claim 3, R3.5 branch](./diagrams/Claim3_R3.5.png)
 
 </details>
 
