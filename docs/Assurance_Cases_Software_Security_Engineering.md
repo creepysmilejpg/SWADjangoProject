@@ -126,6 +126,9 @@ R4.5: Unless leftover API tokens keep access
 
 ### Claim 5: DefectDojo protects Jira integration credentials and prevents unauthorized configuration changes and webhook interactions
 
+<img width="1241" height="542" alt="image" src="https://github.com/user-attachments/assets/1c081003-deeb-45f1-8446-1986423a9874" />
+
+
 R5.1: Unless the Jira password is stored unencrypted
 
 R5.2: Unless the credential is exposed in the UI or API
