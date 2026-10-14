@@ -175,20 +175,42 @@ Task assignments, discussion, and progress tracking for this project are managed
 
 ### Claim 5: DefectDojo protects Jira integration credentials and prevents unauthorized configuration changes and webhook interactions
 
-<img width="1241" height="542" alt="image" src="https://github.com/user-attachments/assets/1c081003-deeb-45f1-8446-1986423a9874" />
+![Claim 5 overview](./diagrams/Claim5_Overview.png)
 
+<details>
+<summary><b>R5.1: Unless the Jira password is stored unencrypted</b></summary>
 
-R5.1: Unless the Jira password is stored unencrypted
+![Claim 5, R5.1 branch](./diagrams/Claim5_R5.1.png)
 
-R5.2: Unless the credential is exposed in the UI or API
+</details>
 
-R5.3: Unless the webhook secret is disabled or leaked
+<details>
+<summary><b>R5.2: Unless the credential is exposed in the UI or API</b></summary>
 
-R5.4: Unless non-admins can edit the Jira configuration
+![Claim 5, R5.2 branch](./diagrams/Claim5_R5.2.png)
 
-R5.5: Unless Jira configuration changes aren't logged
+</details>
 
-## 3. AI enhancement
+<details>
+<summary><b>R5.3: Unless the webhook secret is disabled or leaked</b></summary>
+
+![Claim 5, R5.3 branch](./diagrams/Claim5_R5.3.png)
+
+</details>
+
+<details>
+<summary><b>R5.4: Unless non-admins can edit the Jira configuration</b></summary>
+
+![Claim 5, R5.4 branch](./diagrams/Claim5_R5.4.png)
+
+</details>
+
+<details>
+<summary><b>R5.5: Unless Jira configuration changes aren't logged</b></summary>
+
+![Claim 5, R5.5 branch](./diagrams/Claim5_R5.5.png)
+
+</details>
 
 ### Overview
 
