@@ -136,18 +136,42 @@ Task assignments, discussion, and progress tracking for this project are managed
 
 ### Claim 4: DefectDojo restricts administrative privilege changes to authorized administrators and provides an auditable record of access control changes
 
-<img width="905" height="658" alt="image" src="https://github.com/user-attachments/assets/21f25fda-1e3f-4fbd-82ef-cead394a4351" />
+![Claim 4 overview](./diagrams/Claim4_Overview.png)
 
+<details>
+<summary><b>R4.1: Unless the admin account is compromised</b></summary>
 
-R4.1: Unless the admin account is compromised
+![Claim 4, R4.1 branch](./diagrams/Claim4_R4.1.png)
 
-R4.2: Unless access-list changes aren't recorded
+</details>
 
-R4.3: Unless non-staff users get permissions through Django Admin
+<details>
+<summary><b>R4.2: Unless access-list changes aren't recorded</b></summary>
 
-R4.4: Unless audit records can be altered or purged
+![Claim 4, R4.2 branch](./diagrams/Claim4_R4.2.png)
 
-R4.5: Unless leftover API tokens keep access
+</details>
+
+<details>
+<summary><b>R4.3: Unless non-staff users get permissions through Django Admin</b></summary>
+
+![Claim 4, R4.3 branch](./diagrams/Claim4_R4.3.png)
+
+</details>
+
+<details>
+<summary><b>R4.4: Unless audit records can be altered or purged</b></summary>
+
+![Claim 4, R4.4 branch](./diagrams/Claim4_R4.4.png)
+
+</details>
+
+<details>
+<summary><b>R4.5: Unless leftover API tokens keep access</b></summary>
+
+![Claim 4, R4.5 branch](./diagrams/Claim4_R4.5.png)
+
+</details>
 
 ### Claim 5: DefectDojo protects Jira integration credentials and prevents unauthorized configuration changes and webhook interactions
 
