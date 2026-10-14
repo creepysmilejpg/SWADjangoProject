@@ -101,13 +101,28 @@ Task assignments, discussion, and progress tracking for this project are managed
 
 R3.1: Unless an endpoint skips the authorization check
 
+<img width="859" height="650" alt="image" src="https://github.com/user-attachments/assets/8a067fcd-fe20-48c2-b421-1d00d74ceabb" />
+
+
 R3.2: Unless lists, reports, or metrics leak other assets
+
+<img width="863" height="649" alt="image" src="https://github.com/user-attachments/assets/e9023fe1-adeb-41f7-a4a8-1adea59a2a02" />
+
 
 R3.3: Unless staff status bypasses the access lists
 
+<img width="852" height="646" alt="image" src="https://github.com/user-attachments/assets/887a22b5-ad56-40b7-a07d-8561014abbff" />
+
+
 R3.4: Unless an authorized user's account is hijacked
 
+<img width="854" height="645" alt="image" src="https://github.com/user-attachments/assets/d0f12515-015f-4966-b2ed-e41bac30b36d" />
+
+
 R3.5: Unless Organization-level access cascades too broadly
+
+<img width="852" height="650" alt="image" src="https://github.com/user-attachments/assets/d7d94ad2-779e-4236-8d89-18965c3bfb90" />
+
 
 ### Claim 4: DefectDojo restricts administrative privilege changes to authorized administrators and provides an auditable record of access control changes
 
