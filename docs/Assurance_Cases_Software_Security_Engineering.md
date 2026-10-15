@@ -1,4 +1,4 @@
-# Assurance Cases for Software Security Engineering
+S# Assurance Cases for Software Security Engineering
 
 **Team 5**
 
@@ -433,7 +433,7 @@ Work for this assignment was tracked on the repository's GitHub Project Board. E
 
 **Ray Donner.** For this particular assignment, I learned that it takes more effort to make a security claim than to simply claim it. Providing sufficient evidence to support the claim is necessary. This somewhat applies for what I do for my job. I develop automated security solutions in a team of 6. On the regular, we have to think proactively for how our solution ensures security regarding various aspects, including different things tenants have to check and methods the use to create them. Demonstrating that a claim satisfies a particular security property requires reasoning, evidene, and consideration of potential weaknesses. I found it especially useful as it shifted my perspective of just identifying security measures to thinking about how they can be effectively demonstrated.
 
-**Chandler Crist.** *[To be added by Chandler.]*
+**Chandler Crist.** One of the biggest things I took away from this assignment was how much more structured a security argument has to be compared to simply identifying a security concern. My main contribution was working through Claims 3, 4, and 5, which focused on authorization boundaries, administrative privilege changes, and Jira integration security. Building out the rebuttals for each claim forced me to think about the conditions that could cause a security claim to fail, not just the controls that support it. For example, saying that DefectDojo restricts access is much less meaningful unless you also consider things like skipped authorization checks, overly broad organization-level permissions, compromised administrator accounts, or exposed integration credentials. Creating the overview and rebuttal diagrams also helped me see how the claims, exceptions, sub-claims, and evidence all fit together as one argument instead of separate pieces of information. The most useful part of the assignment for me was learning to question whether the available evidence actually proves the claim being made. Going forward, I think I will be more careful about separating what a system is designed to do from what can actually be demonstrated through configuration, testing, logs, or other evidence.
 
 ### Team reflection
 
