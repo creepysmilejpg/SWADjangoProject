@@ -165,7 +165,7 @@ These flows cross a trust boundary in the DFDs, so their threats are reviewed fi
 
 **Grant Nichter.** TODO
 
-**Ray Donner.** TODO
+**Ray Donner.** Working as a cybersecurity engineer, I develop tools to help automate security processes. This assignment has been the most useful/helpful to see the ins and outs of the Microsoft Threat Modeling Tool and compare its automatically generated threats against the security concerns we had looked for in previous assignments. This has helped me understand more the importance of incorporating security considerations through the software development cycle. 
 
 **Alex Bahwawsi.** TODO
 
