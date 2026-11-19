@@ -68,6 +68,10 @@ Threats were generated automatically by TMT's Analysis View for the Level 1 and 
 - **Needs Investigation:** the threat is relevant and not fully addressed; a mitigation strategy is documented.
 - **Not Applicable:** the threat does not apply to this deployment; the justification explains why.
 
+
+> **TODO:** Need to go through and figure out which threats have been mitigated by DefectDojo, which ones need investigation, and which ones are not applicable.
+
+
 | Diagram | Threats generated | Mitigated | Needs Investigation | Not Applicable |
 |---|---|---|---|---|
 | Level 1 - DefectDojo System | 19 | 0 | 0 | 0 |
