@@ -1,4 +1,4 @@
-# Issue #12 — Review of automatically identified threats
+Review of automatically identified threats
 
 **Project:** DefectDojo — Team 5  
 **Assignment responsibility:** Examine each automatically identified threat, note which are relevant, and document reasonable mitigations  
