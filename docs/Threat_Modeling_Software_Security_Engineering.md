@@ -40,8 +40,6 @@ The DFDs below support the five scenarios prioritized in the Security Requiremen
 
 ### Level 1: DefectDojo System
 
-> **TODO:** Export the "Level 1 - DefectDojo System" tab from TMT (right-click the canvas, then **Export Image**, or take a screenshot) and save it as `docs/diagrams/DFD_Level1_System.png`.
-
 ![Level 1 DFD: DefectDojo system](./diagrams/DFD_Level1_System.png)
 
 The Level 1 DFD shows the five external interactors reaching DefectDojo through nginx (TLS termination), the Django application reading and writing PostgreSQL, asynchronous work passing through the Valkey task queue to the Celery worker, and the Celery worker exchanging data with Jira. The Jira webhook is the only flow that enters DefectDojo from an external service without a user session.
