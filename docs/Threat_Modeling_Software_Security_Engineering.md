@@ -157,7 +157,7 @@ These flows cross a trust boundary in the DFDs, so their threats are reviewed fi
 
 ---
 
-## 6. Reflection
+## Part 2 Reflection/Obervations
 
 ### Individual reflections
 
