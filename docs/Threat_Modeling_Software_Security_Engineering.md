@@ -145,14 +145,9 @@ These flows cross a trust boundary in the DFDs, so their threats are reviewed fi
 
 ## 4. TMT HTML report
 
-> **TODO:**
-> 1. In TMT, after all threats have a state and justification, run **Reports → Create Full Report** and save it as `DefectDojo_Threat_Model_Report.htm`.
-> 2. Commit it to `docs/reports/DefectDojo_Threat_Model_Report.htm`, and commit the saved model as `docs/reports/DefectDojo_Threat_Model.tm7`.
-> 3. The preview link below works once the file is pushed to the `main` branch.
 
-**Full TMT report (rendered):** [DefectDojo Threat Model Report](https://htmlpreview.github.io/?https://github.com/creepysmilejpg/SWADjangoProject/blob/main/docs/reports/DefectDojo_Threat_Model_Report.htm)
+**Full TMT report (rendered):** [DefectDojo Threat Model Report](https://htmlpreview.github.io/?https://github.com/creepysmilejpg/SWADjangoProject/blob/main/docs/DefectDojo_threat_report.htm)
 
-**Source files:** [HTML report](./reports/DefectDojo_Threat_Model_Report.htm) | [TMT model (.tm7)](./reports/DefectDojo_Threat_Model.tm7)
 
 ---
 
