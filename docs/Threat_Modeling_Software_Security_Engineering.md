@@ -62,8 +62,6 @@ Administrator requests pass through Authentication and a staff/superuser Authori
 
 ### Method
 
-> **TODO:** Fill in the numbers after running **View → Analysis View** in TMT.
-
 Threats were generated automatically by TMT's Analysis View for the Level 1 and Level 2 diagrams. Each threat was reviewed and assigned one of three states:
 
 - **Mitigated:** DefectDojo or the deployment already addresses the threat; the justification names the control.
