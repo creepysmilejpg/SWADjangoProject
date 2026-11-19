@@ -146,7 +146,7 @@ These flows cross a trust boundary in the DFDs, so their threats are reviewed fi
 ## 4. TMT HTML report
 
 
-**Full TMT report (rendered):** [DefectDojo Threat Model Report](https://htmlpreview.github.io/?https://github.com/creepysmilejpg/SWADjangoProject/blob/main/docs/DefectDojo_threat_report.htm)
+**Full TMT report (rendered):** [DefectDojo Threat Model Report](https://htmlpreview.github.io/?https://github.com/creepysmilejpg/SWADjangoProject/blob/main/docs/DefectDojo_threat_report.html)
 
 
 ---
