@@ -169,7 +169,7 @@ These flows cross a trust boundary in the DFDs, so their threats are reviewed fi
 
 **Alex Bahwawsi.** TODO
 
-**Chandler Crist.** TODO
+**Chandler Crist.** This assignment helped me better understand how threat modeling can identify security risks that might otherwise be overlooked during development. I found reviewing the automatically generated threats particularly useful because not every finding or suggested mitigation applied directly to DefectDojo's architecture. It reinforced the importance of understanding the system and using professional judgment when evaluating security risks, rather than relying entirely on automated tools.
 
 ### Team reflection
 
