@@ -46,19 +46,13 @@ The DFDs below support the five scenarios prioritized in the Security Requiremen
 
 The Level 1 DFD shows the five external interactors reaching DefectDojo through nginx (TLS termination), the Django application reading and writing PostgreSQL, asynchronous work passing through the Valkey task queue to the Celery worker, and the Celery worker exchanging data with Jira. The Jira webhook is the only flow that enters DefectDojo from an external service without a user session.
 
-> **TODO (optional):** Add two or three sentences on anything your team wants to highlight in this diagram.
-
 ### Level 2: Scan Import, Triage, and Remediation (S1-S3)
-
-> **TODO:** Export the "Level 2 - Import, Triage, Remediation" tab and save it as `docs/diagrams/DFD_Level2_Import_Triage.png`.
 
 ![Level 2 DFD: import, triage, and remediation](./diagrams/DFD_Level2_Import_Triage.png)
 
 Every request passes through Authentication (session cookie or API token, checked against Users & API Tokens) and then Authorization (checked against the Authorized Users lists) before reaching Findings Views or the Import Engine. Triage changes made in Findings Views are written to the Findings DB and recorded in the Audit Log.
 
 ### Level 2: Administration and Jira Integration (S4-S5)
-
-> **TODO:** Export the "Level 2 - Administration and Jira" tab and save it as `docs/diagrams/DFD_Level2_Admin_Jira.png`.
 
 ![Level 2 DFD: administration and Jira integration](./diagrams/DFD_Level2_Admin_Jira.png)
 
