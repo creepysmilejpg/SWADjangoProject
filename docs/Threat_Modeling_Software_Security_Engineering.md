@@ -72,19 +72,19 @@ Threats were generated automatically by TMT's Analysis View for the Level 1 and 
 
 | Diagram | Threats generated | Mitigated | Needs Investigation | Not Applicable |
 |---|---|---|---|---|
-| Level 1 - DefectDojo System | TODO | TODO | TODO | TODO |
-| Level 2 - Import, Triage, Remediation | TODO | TODO | TODO | TODO |
-| Level 2 - Administration and Jira | TODO | TODO | TODO | TODO |
-| **Total** | **TODO** | **TODO** | **TODO** | **TODO** |
+| Level 1 - DefectDojo System | 19 | 0 | 0 | 0 |
+| Level 2 - Import, Triage, Remediation | 27 | 0 | 0 | 0 |
+| Level 2 - Administration and Jira | 0 | 0 | 0 | 0 |
+| **Total** | **91** | **0** | **0** | **0** |
 
 | STRIDE category | Count |
 |---|---|
-| Spoofing | TODO |
-| Tampering | TODO |
-| Repudiation | TODO |
-| Information Disclosure | TODO |
-| Denial of Service | TODO |
-| Elevation of Privilege | TODO |
+| Spoofing | 0 |
+| Tampering | 20 |
+| Repudiation | 10 |
+| Information Disclosure | 20 |
+| Denial of Service | 0 |
+| Elevation of Privilege | 41 |
 
 ### Threats on flows that cross trust boundaries
 
