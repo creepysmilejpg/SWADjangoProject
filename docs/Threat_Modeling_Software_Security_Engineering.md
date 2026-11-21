@@ -340,4 +340,4 @@ Of the nine mitigation groups for the TMT-generated threats, two are present as 
 
 ### Team reflection
 
-> **TODO:** Combine the individual reflections into one paragraph for the team.
+This assignment provided us with a deeper understanding of the threat modeling process and the importance of incorporating security considerations throughout the software development lifecycle. Some of us had prior experience with threat analysis, but creating our own data flow diagrams gave us a better understanding of how data moves through a system and how vulnerabilities can emerge. Comparing the automatically generated threats from the Microsoft Threat Modeling Tool to the security concerns we had previously identified also reinforced that automated tools are valuable assets, but can't replace an understanding of the system as a whole and professional judgment. We learned that an effective threat model is more than a simple list of potential threats and mitigations, it must be evaluated against the actual implementation to determine whether the expected mitigations are effective. 
