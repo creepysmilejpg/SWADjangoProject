@@ -223,9 +223,7 @@ Of the nine mitigation groups for the TMT-generated threats, two are present as 
 
 ### Individual reflections
 
-> **TODO:** Each member writes a short paragraph: what did you learn from this assignment, and what did you find most useful?
-
-**Grant Nichter.** TODO
+**Grant Nichter.** This is not my first time working with threat modeling in some capacity as I have done some before for my job. However this is the first time having to map out the software that I do the threat analysis for (mapping in the past was always been done already). Because of this I am able to understand how the threats work to a greater degree than I would have if I hadn't created the diagrams. This assignment also taught me some different ways to narrow down vulnerabilities that I previously hadn't used before (mostly involving the help of AI), Since I work in vulnerability management this is nothing new to me but I don't often get to feed those vulnerabilities to AI (for data privacy purposes) so getting to play around with it in an environment that allows for that kinda resource usage was really interesting for me. 
 
 **Ray Donner.** Working as a cybersecurity engineer, I develop tools to help automate security processes. This assignment has been the most useful/helpful to see the ins and outs of the Microsoft Threat Modeling Tool and compare its automatically generated threats against the security concerns we had looked for in previous assignments. This has helped me understand more the importance of incorporating security considerations through the software development cycle. 
 
